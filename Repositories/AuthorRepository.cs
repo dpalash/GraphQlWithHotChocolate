@@ -7,8 +7,8 @@ namespace GraphQlWithHotChocolate.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
-        private readonly List<Author> _authors = new List<Author>();
-        private readonly List<BlogPost> _posts = new List<BlogPost>();
+        private static readonly List<Author> Authors = new List<Author>();
+        private static readonly List<BlogPost> Posts = new List<BlogPost>();
 
         public AuthorRepository()
         {
@@ -42,19 +42,26 @@ namespace GraphQlWithHotChocolate.Repositories
                 Author = author2
             };
 
-            _posts.Add(csharp);
-            _posts.Add(java);
-            _authors.Add(author1);
-            _authors.Add(author2);
+            if (!Posts.Any())
+            {
+                Posts.Add(csharp);
+                Posts.Add(java);
+            }
+
+            if (!Authors.Any())
+            {
+                Authors.Add(author1);
+                Authors.Add(author2);
+            }
         }
 
         public Author CreateAuthor(Author author)
         {
-            var lastAuthor = _authors.OrderByDescending(x => x.Id).FirstOrDefault();
+            var lastAuthor = Authors.OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastAuthor != null)
             {
                 author.Id = lastAuthor.Id + 1;
-                _authors.Add(author);
+                Authors.Add(author);
             }
 
             return author;
@@ -62,21 +69,21 @@ namespace GraphQlWithHotChocolate.Repositories
 
         public List<Author> GetAllAuthors()
         {
-            return _authors;
+            return Authors;
         }
 
         public Author GetAuthorById(int id)
         {
-            return _authors.FirstOrDefault(author => author.Id == id);
+            return Authors.FirstOrDefault(author => author.Id == id);
         }
 
         public BlogPost CreatePost(BlogPost blogPost)
         {
-            var lastBlogPost = _authors.OrderByDescending(x => x.Id).FirstOrDefault();
+            var lastBlogPost = Authors.OrderByDescending(x => x.Id).FirstOrDefault();
             if (lastBlogPost != null)
             {
                 blogPost.Id = lastBlogPost.Id + 1;
-                _posts.Add(blogPost);
+                Posts.Add(blogPost);
             }
 
             return blogPost;
@@ -84,7 +91,7 @@ namespace GraphQlWithHotChocolate.Repositories
 
         public List<BlogPost> GetPostsByAuthor(int id)
         {
-            return _posts.Where(post => post.Author.Id == id).ToList();
+            return Posts.Where(post => post.Author.Id == id).ToList();
         }
     }
 }
