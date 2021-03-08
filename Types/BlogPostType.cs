@@ -5,6 +5,6 @@ namespace GraphQlWithHotChocolate.Types
 {
     public sealed class BlogPostType : ObjectType<BlogPost>
     {
-       
+
     }
 }

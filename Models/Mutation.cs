@@ -17,19 +17,5 @@ namespace GraphQlWithHotChocolate.Models
             var createdAuthor = authorService.CreateAuthor(author);
             return createdAuthor;
         }
-
-        //public CreateAuthor([Service] IAuthorService authorService, [Service] ITopicEventSender eventSender, string departmentName)
-        //{
-        //    var newDepartment = new Department
-        //    {
-        //        Name = departmentName
-        //    };
-
-        //    var createdDepartment = authorService.CreateAuthor(newDepartment);
-
-        //    await eventSender.SendAsync("PostCreated", createdDepartment);
-
-        //    return createdDepartment;
-        //}
     }
 }
