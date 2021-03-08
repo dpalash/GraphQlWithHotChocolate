@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\GraphQLDemoSchema.cs" />
+    <Compile Remove="Models\GraphQLQueryBody.cs" />
+    <Compile Remove="Models\QueryType.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.9" />
+  </ItemGroup>
+
+
+</Project>
