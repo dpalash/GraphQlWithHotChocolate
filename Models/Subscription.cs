@@ -6,24 +6,19 @@ using HotChocolate;
 using HotChocolate.Execution;
 using HotChocolate.Subscriptions;
 using HotChocolate.Types;
+// ReSharper disable UnusedMember.Global
 
 namespace GraphQlWithHotChocolate.Models
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Subscription
     {
         [SubscribeAndResolve]
-        public async ValueTask<ISourceStream<List<Author>>> OnAuthorGet([Service] ITopicEventReceiver eventReceiver, CancellationToken cancellationToken)
+        public async ValueTask<ISourceStream<List<Author>>> OnAuthorCreate([Service] ITopicEventReceiver eventReceiver, CancellationToken cancellationToken)
         {
-            var result = await eventReceiver.SubscribeAsync<string, List<Author>>("ReturnedAuthor", cancellationToken);
+            var result = await eventReceiver.SubscribeAsync<string, List<Author>>("AuthorCreated", cancellationToken);
 
             return result;
         }
-
-        //[SubscribeAndResolve]
-        //public async ValueTask<ISourceStream<BlogPost>> OnBlogPostCreate([Service] ITopicEventReceiver eventReceiver, CancellationToken cancellationToken)
-        //{
-        //    return await eventReceiver.SubscribeAsync<string, BlogPost>("BlogPostCreated", cancellationToken);
-        //}
-
     }
 }

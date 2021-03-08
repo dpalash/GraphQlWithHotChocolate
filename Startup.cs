@@ -56,12 +56,13 @@ namespace GraphQlWithHotChocolate
             app.UseHttpsRedirection();
 
             app.UseCors(AllowedOrigin);
+
             app.UseWebSockets();
 
             app.UseRouting();
 
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGraphQL();
