@@ -5,38 +5,38 @@ using GraphQlWithHotChocolate.Interfaces.Services;
 
 namespace GraphQlWithHotChocolate.Services
 {
-    public class AuthorService : IAuthorService
+    public class SampleService : ISampleService
     {
-        private readonly IAuthorRepository _authorRepository;
+        private readonly ISampleRepository _sampleRepository;
 
-        public AuthorService(IAuthorRepository authorRepository)
+        public SampleService(ISampleRepository sampleRepository)
         {
-            _authorRepository = authorRepository;
+            _sampleRepository = sampleRepository;
         }
 
         public Author CreateAuthor(Author author)
         {
-            return _authorRepository.CreateAuthor(author);
+            return _sampleRepository.CreateAuthor(author);
         }
 
         public List<Author> GetAllAuthors()
         {
-            return _authorRepository.GetAllAuthors();
+            return _sampleRepository.GetAllAuthors();
         }
 
         public Author GetAuthorById(int id)
         {
-            return _authorRepository.GetAuthorById(id);
+            return _sampleRepository.GetAuthorById(id);
         }
 
         public BlogPost CreateBlogPost(BlogPost blogPost)
         {
-            return _authorRepository.CreatePost(blogPost);
+            return _sampleRepository.CreatePost(blogPost);
         }
 
         public List<BlogPost> GetPostsByAuthor(int id)
         {
-            return _authorRepository.GetPostsByAuthor(id);
+            return _sampleRepository.GetPostsByAuthor(id);
         }
     }
 }

@@ -27,8 +27,8 @@ namespace GraphQlWithHotChocolate
         {
             services.AddInMemorySubscriptions();
 
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<ISampleRepository, SampleRepository>();
+            services.AddScoped<ISampleService, SampleService>();
 
             services.AddGraphQLServer()
                 .AddQueryType<Query>()

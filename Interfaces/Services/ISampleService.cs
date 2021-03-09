@@ -3,7 +3,7 @@ using GraphQlWithHotChocolate.DTOs;
 
 namespace GraphQlWithHotChocolate.Interfaces.Services
 {
-    public interface IAuthorService
+    public interface ISampleService
     {
         Author CreateAuthor(Author author);
         List<Author> GetAllAuthors();

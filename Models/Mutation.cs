@@ -11,7 +11,7 @@ namespace GraphQlWithHotChocolate.Models
     public class Mutation
     {
         // ReSharper disable once UnusedMember.Global
-        public async Task<Author> CreateAuthor([Service] IAuthorService authorService, [Service] ITopicEventSender eventSender, string firstName, string lastName)
+        public async Task<Author> CreateAuthor([Service] ISampleService sampleService, [Service] ITopicEventSender eventSender, string firstName, string lastName)
         {
             Author author = new Author
             {
@@ -19,9 +19,9 @@ namespace GraphQlWithHotChocolate.Models
                 LastName = lastName
             };
 
-            var createdAuthor = authorService.CreateAuthor(author);
+            var createdAuthor = sampleService.CreateAuthor(author);
 
-            var allAuthors = authorService.GetAllAuthors();
+            var allAuthors = sampleService.GetAllAuthors();
 
             await eventSender.SendAsync("AuthorCreated", allAuthors);
 

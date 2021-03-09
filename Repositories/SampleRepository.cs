@@ -5,12 +5,12 @@ using GraphQlWithHotChocolate.Interfaces.Repositories;
 
 namespace GraphQlWithHotChocolate.Repositories
 {
-    public class AuthorRepository : IAuthorRepository
+    public class SampleRepository : ISampleRepository
     {
         private static readonly List<Author> Authors = new List<Author>();
         private static readonly List<BlogPost> Posts = new List<BlogPost>();
 
-        public AuthorRepository()
+        public SampleRepository()
         {
             Author author1 = new Author
             {

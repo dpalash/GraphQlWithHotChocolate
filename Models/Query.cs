@@ -10,10 +10,10 @@ namespace GraphQlWithHotChocolate.Models
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class Query
     {
-        public List<Author> GetAllAuthors([Service] IAuthorService authorService) => authorService.GetAllAuthors();
+        public List<Author> GetAllAuthors([Service] ISampleService sampleService) => sampleService.GetAllAuthors();
 
-        public Author GetAuthorById([Service] IAuthorService authorService, int id) => authorService.GetAuthorById(id);
+        public Author GetAuthorById([Service] ISampleService sampleService, int id) => sampleService.GetAuthorById(id);
 
-        public List<BlogPost> GetPostsByAuthor([Service] IAuthorService authorService, int id) => authorService.GetPostsByAuthor(id);
+        public List<BlogPost> GetPostsByAuthor([Service] ISampleService sampleService, int id) => sampleService.GetPostsByAuthor(id);
     }
 }
