@@ -12,46 +12,36 @@ namespace GraphQlWithHotChocolate.Repositories
 
         public SampleRepository()
         {
-            Author author1 = new Author
-            {
-                Id = 1,
-                FirstName = "PALASH",
-                LastName = "DEBNATH"
-            };
-
-            Author author2 = new Author
-            {
-                Id = 2,
-                FirstName = "PRITAM",
-                LastName = "DEBNATH"
-            };
-
-            BlogPost csharp = new BlogPost
-            {
-                Id = 1,
-                Title = "Mastering C#",
-                Content = "This is a series of articles on C#.",
-                Author = author1
-            };
-
-            BlogPost java = new BlogPost
-            {
-                Id = 2,
-                Title = "Mastering Mechanical Engineering",
-                Content = "This is a series of articles on Mechanical Engineering",
-                Author = author2
-            };
-
-            if (!Posts.Any())
-            {
-                Posts.Add(csharp);
-                Posts.Add(java);
-            }
-
             if (!Authors.Any())
             {
-                Authors.Add(author1);
-                Authors.Add(author2);
+                var author1CreateResult = Author.CreateAuthor(0, "PALASH", "DEBNATH");
+                if (author1CreateResult.IsSuccess)
+                    Authors.Add(author1CreateResult.Value);
+
+                var author2CreateResult = Author.CreateAuthor(1, "PRITAM", "DEBNATH");
+                if (author2CreateResult.IsSuccess)
+                    Authors.Add(author2CreateResult.Value);
+
+                if (!Posts.Any())
+                {
+                    var blogPost1CreateResult = BlogPost.CreateBlogPost(
+                        1,
+                        "Mastering C#",
+                        "This is a series of articles on C#.",
+                        author1CreateResult.Value);
+
+                    if (blogPost1CreateResult.IsSuccess)
+                        Posts.Add(blogPost1CreateResult.Value);
+
+                    var blogPost2CreateResult = BlogPost.CreateBlogPost(
+                        2,
+                        "Mastering Mechanical Engineering",
+                        "This is a series of articles on Mechanical Engineering",
+                        author2CreateResult.Value);
+
+                    if (blogPost2CreateResult.IsSuccess)
+                        Posts.Add(blogPost2CreateResult.Value);
+                }
             }
         }
 
@@ -67,6 +57,11 @@ namespace GraphQlWithHotChocolate.Repositories
             return author;
         }
 
+        public int GetLastAuthorId()
+        {
+            return Authors.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+        }
+
         public List<Author> GetAllAuthors()
         {
             return Authors;
@@ -79,14 +74,14 @@ namespace GraphQlWithHotChocolate.Repositories
 
         public BlogPost CreatePost(BlogPost blogPost)
         {
-            var lastBlogPost = Authors.OrderByDescending(x => x.Id).FirstOrDefault();
-            if (lastBlogPost != null)
-            {
-                blogPost.Id = lastBlogPost.Id + 1;
-                Posts.Add(blogPost);
-            }
+            Posts.Add(blogPost);
 
             return blogPost;
+        }
+
+        public int GetLastPostId()
+        {
+            return Posts.OrderByDescending(x => x.Id).FirstOrDefault().Id;
         }
 
         public List<BlogPost> GetPostsByAuthor(int id)

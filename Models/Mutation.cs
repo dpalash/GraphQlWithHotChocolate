@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GraphQlWithHotChocolate.DTOs;
 using GraphQlWithHotChocolate.Interfaces.Services;
 using HotChocolate;
@@ -11,15 +12,15 @@ namespace GraphQlWithHotChocolate.Models
     public class Mutation
     {
         // ReSharper disable once UnusedMember.Global
-        public async Task<Author> CreateAuthor([Service] ISampleService sampleService, [Service] ITopicEventSender eventSender, string firstName, string lastName)
+        public async Task<Author> CreateAuthorAsync([Service] ISampleService sampleService, [Service] ITopicEventSender eventSender, string firstName, string lastName)
         {
-            Author author = new Author
-            {
-                FirstName = firstName,
-                LastName = lastName
-            };
+            var lastAuthorId = sampleService.GetLastAuthorId();
 
-            var createdAuthor = sampleService.CreateAuthor(author);
+            var authorCreationResult = Author.CreateAuthor(lastAuthorId, firstName, lastName);
+            if (authorCreationResult.IsFailure)
+                throw new Exception(authorCreationResult.Error);
+
+            var createdAuthor = sampleService.CreateAuthor(authorCreationResult.Value);
 
             var allAuthors = sampleService.GetAllAuthors();
 
